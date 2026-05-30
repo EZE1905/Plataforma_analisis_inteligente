@@ -1,18 +1,28 @@
 <!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Plataforma de Análisis Inteligente</title>
-    </head>
-    <body>
-        <header>
-            <h1>Bienvenido a la Plataforma de Análisis Inteligente</h1>
-        </header>
-        <main>
-            <form method="POST" enctype="multipart/form-data" action="">
+<html lang="es">
 
-            </form>
-        </main>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <title>Plataforma de Análisis Inteligente</title>
+</head>
+
+<body>
+    <main class="container">
+        <header class="page-header">
+            <h1 class="page-title">Plataforma de Análisis Inteligente</h1>
+            <p class="page-description">Cargá un archivo y obtené un análisis automático de los datos.</p>
+        </header>
+        <form class="upload-form" method="POST" enctype="multipart/form-data" action="/upload">
+            <label class="form-label" for="file"> Seleccioná un archivo </label>
+            <div class="file-input-wrapper">
+                <input class="file-input" type="file" id="file" name="file" required />
+                <label class="custom-file-button" for="file"> Elegir archivo </label>
+            </div>
+            <button class="submit-button" type="submit">Analizar archivo</button>
+        </form>
+    </main>
+</body>
+
 </html>

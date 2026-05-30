@@ -1,0 +1,124 @@
+:root {
+    --fondo: #0f172a;
+    --card: #1e293b;
+    --texto: #e2e8f0;
+    --acento: #38bdf8;
+    --acento-hover: #0ea5e9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.page-header {
+    text-align: center;
+}
+
+.page-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    margin-bottom: 15px;
+}
+
+.page-description {
+    color: #94a3b8;
+    font-size: 1.1rem;
+}
+
+.upload-form {
+    width: 100%;
+    max-width: 500px;
+
+    background: var(--card);
+    padding: 30px;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,.35);
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.file-input-wrapper {
+    position: relative;
+}
+
+.file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-file-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 55px;
+
+    border-radius: 12px;
+    border: 1px solid #334155;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.custom-file-button:hover {
+    border-color: var(--acento);
+    background: rgba(56, 189, 248, .08);
+}
+
+.submit-button {
+    border: none;
+    height: 55px;
+    border-radius: 12px;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    background: linear-gradient(
+        135deg,
+        var(--acento),
+        var(--acento-hover)
+    );
+
+    color: white;
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(56,189,248,.3);
+}
