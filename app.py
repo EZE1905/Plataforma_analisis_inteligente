@@ -3,6 +3,7 @@ import pandas as pd
 
 #importando modulos
 from limpieza.limpiar import limpiar_dataset
+from analisis.metricas import analizar_kpis
 
 app = Flask(__name__)
 
@@ -17,10 +18,11 @@ def upload():
     try: 
         df_crudo = pd.read_csv(archivo)
         df_limpio = limpiar_dataset(df_crudo)
+        kpis = analizar_kpis(df_limpio)
+        return render_template('index.html', kpis=kpis)
     except Exception as e:
         print(f"Error al cargar el archivo: {e}")
-
-    return redirect('/')
+        return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)

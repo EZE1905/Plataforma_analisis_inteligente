@@ -20,17 +20,15 @@ body {
 
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 20px;
 }
 
 .container {
+    margin-top: 40px;
     width: 100%;
-    max-width: 700px;
-
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 50px;
 }
 
@@ -51,6 +49,7 @@ body {
 .upload-form {
     width: 100%;
     max-width: 500px;
+    margin: 0 auto;
 
     background: var(--card);
     padding: 30px;
@@ -121,4 +120,42 @@ body {
 .submit-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(56,189,248,.3);
+}
+
+
+.kpis-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+
+}
+
+.kpis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.kpi-card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.kpi-title {
+    font-size: 1.2rem;
+    color: #94a3b8;
+}
+
+.kpi-value {
+    font-size: 1.5rem;
+    font-weight: 700;
 }

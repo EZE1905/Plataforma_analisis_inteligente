@@ -22,6 +22,25 @@
             </div>
             <button class="submit-button" type="submit">Analizar archivo</button>
         </form>
+        {% if kpis %}
+        <div class="kpis">
+            <h2 class="kpis-title">Análisis del archivo</h2>
+            <div class="kpis-grid">
+                <div class="kpi-card">
+                    <p class="kpi_titulo">Total Ingresos</p>
+                    <p class="kpi_valor">{{ kpis.total_ingresos }}</p>
+                </div>
+                <div class="kpi-card">
+                    <p class="kpi_titulo">Total Gastos</p>
+                    <p class="kpi_valor">{{ kpis.total_gastos }}</p>
+                </div>
+                <div class="kpi-card">
+                    <p class="kpi_titulo">Balance</p>
+                    <p class="kpi_valor">{{ kpis.balance }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </main>
 </body>
 
