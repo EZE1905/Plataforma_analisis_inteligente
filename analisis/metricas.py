@@ -20,3 +20,8 @@ def analizar_kpis(df):
         'balance': balance
     }
     return kpis
+
+def crear_visual(df_limpio):
+    df_visual = df_limpio[['fecha','operacion','categoria','descripcion','monto']].copy()
+    df_visual['monto'] = df_visual['monto'].apply(lambda x: f"${x:,}".replace(',', '.'))
+    return df_visual.to_html(classes='table', index=False)
