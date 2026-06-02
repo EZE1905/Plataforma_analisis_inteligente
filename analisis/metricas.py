@@ -7,7 +7,12 @@ def analizar_kpis(df):
     total_ingresos = df_ingresos['monto'].sum()
     total_gastos = df_gastos['monto'].sum()
     balance = total_ingresos - total_gastos
-    
+
+    # Guardar totales sin formato para cálculos futuros
+    total_ingresos_raw = df_ingresos['monto'].sum()
+    total_gastos_raw = df_gastos['monto'].sum()
+    balance_raw = total_ingresos_raw - total_gastos_raw
+
     # Formatear totales a formato de moneda
     total_ingresos = f"${total_ingresos:,}".replace(',', '.')
     total_gastos = f"${total_gastos:,}".replace(',', '.')
@@ -17,7 +22,10 @@ def analizar_kpis(df):
     kpis = {
         'total_ingresos': total_ingresos,
         'total_gastos': total_gastos,
-        'balance': balance
+        'balance': balance,
+        'total_ingresos_raw': total_ingresos_raw,
+        'total_gastos_raw': total_gastos_raw,
+        'balance_raw': balance_raw
     }
     return kpis
 

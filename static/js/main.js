@@ -25,5 +25,43 @@ form.addEventListener('submit', function(e) {
 
     setTimeout(() => {
         form.submit();
-    }, 500);
+    }, 600);
 });
+
+// Graficos
+
+let ingresos = ingresos_raw;
+let gastos = gastos_raw;
+let balance = balance_raw;
+
+let ctx = document.getElementById('financeChart').getContext('2d');
+
+let grafico = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+        labels: ['Ingresos', 'Gastos', 'Balance'],
+        datasets: [{
+            label: 'Finanzas',
+            data: [ingresos, gastos, balance],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+            },
+        },
+    }
+})

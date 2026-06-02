@@ -46,14 +46,29 @@
                 </div>
             </div>
         </div>
+        <h2 class="titulo_grafico">Graficación</h2>
+        <div class="grafico_grid">
+            <div class="chart_container">
+                <canvas id="financeChart"></canvas>
+            </div>
+            <div class="chart_container">
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
         <h2 class="data-table-title">Visualización de los datos</h2>
         <div class="data-table">
             {{ df_visual|safe }}
         </div>
         {% endif %}
     </main>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.js"></script>
+    <script>
+        let ingresos_raw = {{ kpis.total_ingresos_raw if kpis else 0 }};
+        let gastos_raw = {{ kpis.total_gastos_raw if kpis else 0 }};
+        let balance_raw = {{ kpis.balance_raw if kpis else 0 }};
+    </script>
+    <script src="/static/js/main.js"></script>
 
-<script src="/static/js/main.js"></script>
+</body>
 
 </html>
