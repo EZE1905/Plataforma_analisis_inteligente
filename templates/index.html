@@ -18,10 +18,16 @@
             <label class="form-label" for="file"> Seleccioná un archivo </label>
             <div class="file-input-wrapper">
                 <input class="file-input" type="file" id="file" name="file" required />
-                <label class="custom-file-button" for="file"> Elegir archivo </label>
+                <label class="custom-file-button" for="file" id="file-label"> Elegir archivo </label>
             </div>
-            <button class="submit-button" type="submit">Analizar archivo</button>
+            <button class="submit-button" type="submit" id="button">Analizar archivo</button>
         </form>
+        <div class="loading-overlay hidden" id="loading">
+            <div class="loading-box">
+                <div class="spinner"></div>
+                <p id="loading-text">Analizando archivo...</p>
+            </div>
+        </div>
         {% if kpis %}
         <div class="kpis">
             <h2 class="kpis-title">Análisis del archivo</h2>
@@ -47,5 +53,7 @@
         {% endif %}
     </main>
 </body>
+
+<script src="/static/js/main.js"></script>
 
 </html>
