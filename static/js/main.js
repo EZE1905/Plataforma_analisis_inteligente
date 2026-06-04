@@ -65,3 +65,47 @@ let grafico = new Chart(ctx, {
         },
     }
 })
+
+// Grafico de gastos por categoria
+
+// gastos
+let labels_gastos = Object.keys(gasto_x_categoria);
+let data_gastos = Object.values(gasto_x_categoria);
+
+// ingresos
+let labels_ingresos = Object.keys(ingreso_x_categoria);
+let data_ingresos = Object.values(ingreso_x_categoria);
+
+// grafico gastos
+
+let ctx2 = document.getElementById('barChartGastos').getContext('2d');
+let grafico_gastos = new Chart(ctx2, {
+    type:"bar",
+    data:{
+        labels: labels_gastos,
+        datasets:[{
+            label: 'Gastos',
+            data: data_gastos,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+        }],
+    },
+})
+
+// grafico ingresos 
+
+let ctx3 = document.getElementById('barChartIngresos').getContext('2d');
+let grafico_ingresos = new Chart(ctx3, {
+    type:"bar",
+    data:{
+        labels: labels_ingresos,
+        datasets:[{
+            label: 'Ingresos',
+            data: data_ingresos,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+        }]
+        },
+    })

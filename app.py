@@ -3,7 +3,7 @@ import pandas as pd
 
 #importando modulos
 from limpieza.limpiar import limpiar_dataset
-from analisis.metricas import analizar_kpis, crear_visual
+from analisis.metricas import analizar_kpis, crear_visual, division_categoria
 
 app = Flask(__name__)
 
@@ -26,7 +26,11 @@ def upload():
 
         # Calcular los KPIs
         kpis = analizar_kpis(df_limpio)
-        return render_template('index.html', kpis=kpis, df_visual=df_visual)
+        
+        # Calcular las divisiones x categorias
+        gastos_x_categoria, ingresos_x_categoria = division_categoria(df_limpio)
+
+        return render_template('index.html', kpis=kpis, df_visual=df_visual,gastos_x_categoria=gastos_x_categoria,ingresos_x_categoria=ingresos_x_categoria)
     
     except Exception as e:
         print(f"Error al cargar el archivo: {e}")

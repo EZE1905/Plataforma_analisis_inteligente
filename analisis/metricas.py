@@ -41,3 +41,18 @@ def crear_visual(df_limpio):
     df_visual = df_limpio[['fecha','operacion','categoria','descripcion','monto']].copy()
     df_visual['monto'] = df_visual['monto'].apply(lambda x: f"${x:,}".replace(',', '.'))
     return df_visual.to_html(classes='table', index=False)
+
+def division_categoria(df):
+    # Filtrar ingresos y gastos
+    df_gastos = df[df['operacion'] == 'gasto']
+    df_ingresos = df[df['operacion'] == 'ingreso']
+    
+    # Calcular totales x categorias
+    gastos_x_categoria = df_gastos.groupby('categoria')['monto'].sum()
+    ingresos_x_categoria = df_ingresos.groupby('categoria')['monto'].sum()
+
+    # Pasar a diccionario
+    gastos_x_categoria = gastos_x_categoria.to_dict()
+    ingresos_x_categoria = ingresos_x_categoria.to_dict()
+
+    return gastos_x_categoria, ingresos_x_categoria

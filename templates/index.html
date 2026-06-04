@@ -61,10 +61,20 @@
         <h2 class="titulo_grafico">Graficación</h2>
         <div class="grafico_grid">
             <div class="chart_container">
+                <p class="grafico_pie">Ingresos, gastos y balance</p>
                 <canvas id="financeChart"></canvas>
             </div>
             <div class="chart_container">
-                <canvas id="barChart"></canvas>
+                <p class="grafico_pie">Ingresos, gastos y balance</p>
+                <canvas id="financeChart"></canvas>
+            </div>
+            <div class="chart_container grafico_bar">
+                <p class="grafico_pie">Gastos por categoría</p>
+                <canvas id="barChartGastos"></canvas>
+            </div>
+            <div class="chart_container grafico_bar">
+                <p class="grafico_pie">Ingresos por categoría</p>
+                <canvas id="barChartIngresos"></canvas>
             </div>
         </div>
         <h2 class="data-table-title">Visualización de los datos</h2>
@@ -75,9 +85,14 @@
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.js"></script>
     <script>
+        // grafico de tortas de ingresos, gastos y balance
         let ingresos_raw = {{ kpis.total_ingresos_raw if kpis else 0 }};
         let gastos_raw = {{ kpis.total_gastos_raw if kpis else 0 }};
         let balance_raw = {{ kpis.balance_raw if kpis else 0 }};
+
+        // grafico de gastos por categoria
+        let gasto_x_categoria = {{ (gastos_x_categoria if kpis else { }) | tojson}};
+        let ingreso_x_categoria = {{ (ingresos_x_categoria if kpis else { }) | tojson}};
     </script>
     <script src="/static/js/main.js"></script>
 
