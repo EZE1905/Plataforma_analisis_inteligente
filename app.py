@@ -17,8 +17,16 @@ def upload():
     archivo = request.files['file']
     
     try:
-        # Leer el archivo CSV y limpiar los datos 
-        df_crudo = pd.read_csv(archivo)
+        # Leer el archivo
+        if archivo.filename.endswith('.csv'):
+            df_crudo = pd.read_csv(archivo)
+        elif archivo.filename.endswith('.xlsx') or archivo.filename.endswith('.xlsm') or archivo.filename.endswith('.xls'):
+            df_crudo = pd.read_excel(archivo) 
+        else:
+            error = "El archivo debe ser .csv, .xlsx, .xls o .xlsm"
+            return render_template('/index.html', error=error)
+
+        # Limpieza
         df_limpio = limpiar_dataset(df_crudo)
 
         # Crear df visual para el frontend

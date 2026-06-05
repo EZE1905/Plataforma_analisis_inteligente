@@ -15,7 +15,8 @@
             <p class="page-description">Cargá un archivo y obtené un análisis automático de los datos.</p>
         </header>
         <form class="upload-form" method="POST" enctype="multipart/form-data" action="/upload">
-            <label class="form-label" for="file"> Seleccioná un archivo </label>
+            {% if error %}<p class="error-message form-label">{{ error }}</p>{% endif %}
+            <label class="form-label" for="file"> Seleccioná un archivo .csv / .xlsx / .xls / .xlsm</label>
             <div class="file-input-wrapper">
                 <input class="file-input" type="file" id="file" name="file" required />
                 <label class="custom-file-button" for="file" id="file-label"> Elegir archivo </label>
