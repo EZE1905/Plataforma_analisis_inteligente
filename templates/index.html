@@ -65,8 +65,8 @@
                 <canvas id="financeChart"></canvas>
             </div>
             <div class="chart_container">
-                <p class="grafico_pie">Ingresos, gastos y balance</p>
-                <canvas id="financeChart"></canvas>
+                <p class="grafico_pie">Porcentaje de ingresos x categorias</p>
+                <canvas id="financeChartCategory"></canvas>
             </div>
             <div class="chart_container grafico_bar">
                 <p class="grafico_pie">Gastos por categoría</p>
@@ -75,6 +75,10 @@
             <div class="chart_container grafico_bar">
                 <p class="grafico_pie">Ingresos por categoría</p>
                 <canvas id="barChartIngresos"></canvas>
+            </div>
+            <div class="chart_container grafico_bar">
+                <p class="grafico_pie">Movimientos por mes</p>
+                <canvas id="lineChartMovimientos"></canvas>
             </div>
         </div>
         <h2 class="data-table-title">Visualización de los datos</h2>
@@ -93,6 +97,10 @@
         // grafico de gastos por categoria
         let gasto_x_categoria = {{ (gastos_x_categoria if kpis else { }) | tojson}};
         let ingreso_x_categoria = {{ (ingresos_x_categoria if kpis else { }) | tojson}};
+
+        // grafico de movimientos por mes
+        let df_fecha_gasto = {{ (df_fecha_gasto if kpis else { }) | tojson}};
+        let df_fecha_ingreso = {{ (df_fecha_ingreso if kpis else { }) | tojson}};
     </script>
     <script src="/static/js/main.js"></script>
 

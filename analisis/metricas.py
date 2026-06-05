@@ -1,3 +1,5 @@
+import pandas as pd
+
 def analizar_kpis(df):
     # Filtrar ingresos y gastos
     df_ingresos = df[df['operacion'] == 'ingreso']
@@ -51,8 +53,39 @@ def division_categoria(df):
     gastos_x_categoria = df_gastos.groupby('categoria')['monto'].sum()
     ingresos_x_categoria = df_ingresos.groupby('categoria')['monto'].sum()
 
+    # Agarrar los 5 mayores
+    gastos_x_categoria = gastos_x_categoria.sort_values(ascending=False).head(5)
+    ingresos_x_categoria = ingresos_x_categoria.sort_values(ascending=False).head(5)
+
     # Pasar a diccionario
     gastos_x_categoria = gastos_x_categoria.to_dict()
     ingresos_x_categoria = ingresos_x_categoria.to_dict()
 
     return gastos_x_categoria, ingresos_x_categoria
+
+def movimientos_fecha(df):
+    # Filtrar ingresos y gastos
+    df_gastos = df[df['operacion'] == 'gasto']
+    df_ingresos = df[df['operacion'] == 'ingreso']
+
+    # Convertir fecha a datetime
+    df_gastos['fecha'] = pd.to_datetime(df_gastos['fecha'])
+    df_ingresos['fecha'] = pd.to_datetime(df_ingresos['fecha'])
+
+    # Agrupar por mes
+    df_gastos['Mes'] = df_gastos['fecha'].dt.to_period('M')
+    df_ingresos['Mes'] = df_ingresos['fecha'].dt.to_period('M')
+
+    #filtrar movimientos por mes y sumar
+    df_fecha_gasto = df_gastos.groupby('Mes')['monto'].sum()
+    df_fecha_ingreso = df_ingresos.groupby('Mes')['monto'].sum()
+
+    # Convertir a string
+    df_fecha_gasto.index = df_fecha_gasto.index.astype(str)
+    df_fecha_ingreso.index = df_fecha_ingreso.index.astype(str)
+
+    #pasar a diccionario
+    df_fecha_gasto = df_fecha_gasto.to_dict()
+    df_fecha_ingreso = df_fecha_ingreso.to_dict()
+
+    return df_fecha_gasto, df_fecha_ingreso
