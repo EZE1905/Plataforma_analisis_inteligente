@@ -4,6 +4,7 @@ import pandas as pd
 #importando modulos
 from limpieza.limpiar import limpiar_dataset
 from analisis.metricas import analizar_kpis, crear_visual, division_categoria, movimientos_fecha
+from analisis.insights import insights, alerta_gastos, balance
 
 app = Flask(__name__)
 
@@ -41,7 +42,16 @@ def upload():
         # Calcular los movimientos x fecha
         df_fecha_gasto, df_fecha_ingreso = movimientos_fecha(df_limpio)
 
-        return render_template('index.html', kpis=kpis, df_visual=df_visual,gastos_x_categoria=gastos_x_categoria,ingresos_x_categoria=ingresos_x_categoria,df_fecha_gasto=df_fecha_gasto,df_fecha_ingreso=df_fecha_ingreso)
+        # Calcular la categoria con mas gasto y mas ingreso
+        max_gasto, max_ingreso = insights(df_limpio)
+
+        # Calcular la alerta de gastos
+        porcentaje = alerta_gastos(df_limpio)
+
+        # Calcular el balance
+        balance_mensual = balance(df_limpio)
+
+        return render_template('index.html', kpis=kpis, df_visual=df_visual,gastos_x_categoria=gastos_x_categoria,ingresos_x_categoria=ingresos_x_categoria,df_fecha_gasto=df_fecha_gasto,df_fecha_ingreso=df_fecha_ingreso,max_gasto=max_gasto,max_ingreso=max_ingreso,porcentaje=porcentaje, balance_mensual=balance_mensual)
     
     except Exception as e:
         print(f"Error al cargar el archivo: {e}")

@@ -323,3 +323,46 @@ body {
     text-align: center;
     margin-bottom: 20px;
 }
+
+/* Insigths */
+
+.insights-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.insight-card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    transition: all .3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.insight-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(56,189,248,.3);
+}
+
+.insight_titulo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+.insight_valor {
+    font-size: 1.3rem;
+    font-weight: 700;
+}

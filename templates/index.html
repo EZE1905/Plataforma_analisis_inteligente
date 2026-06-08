@@ -1,110 +1,134 @@
 <!doctype html>
 <html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/static/css/styles.css" />
+        <title>Plataforma de Análisis Inteligente</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/css/styles.css" />
-    <title>Plataforma de Análisis Inteligente</title>
-</head>
-
-<body>
-    <main class="container">
-        <header class="page-header">
-            <h1 class="page-title">Plataforma de Análisis Inteligente</h1>
-            <p class="page-description">Cargá un archivo y obtené un análisis automático de los datos.</p>
-        </header>
-        <form class="upload-form" method="POST" enctype="multipart/form-data" action="/upload">
-            {% if error %}<p class="error-message form-label">{{ error }}</p>{% endif %}
-            <label class="form-label" for="file"> Seleccioná un archivo .csv / .xlsx / .xls / .xlsm</label>
-            <div class="file-input-wrapper">
-                <input class="file-input" type="file" id="file" name="file" required />
-                <label class="custom-file-button" for="file" id="file-label"> Elegir archivo </label>
-            </div>
-            <button class="submit-button" type="submit" id="button">Analizar archivo</button>
-        </form>
-        <div class="loading-overlay hidden" id="loading">
-            <div class="loading-box">
-                <div class="spinner"></div>
-                <p id="loading-text">Analizando archivo...</p>
-            </div>
-        </div>
-        {% if kpis %}
-        <div class="kpis">
-            <h2 class="kpis-title">Análisis del archivo</h2>
-            <div class="kpis-grid">
-                <div class="kpi-card">
-                    <p class="kpi_titulo">Total Ingresos</p>
-                    <p class="kpi_valor">{{ kpis.total_ingresos }}</p>
+    <body>
+        <main class="container">
+            <header class="page-header">
+                <h1 class="page-title">Plataforma de Análisis Inteligente</h1>
+                <p class="page-description">Cargá un archivo y obtené un análisis automático de los datos.</p>
+            </header>
+            <form class="upload-form" method="POST" enctype="multipart/form-data" action="/upload">
+                {% if error %}
+                <p class="error-message form-label">{{ error }}</p>
+                {% endif %}
+                <label class="form-label" for="file"> Seleccioná un archivo .csv / .xlsx / .xls / .xlsm</label>
+                <div class="file-input-wrapper">
+                    <input class="file-input" type="file" id="file" name="file" required />
+                    <label class="custom-file-button" for="file" id="file-label"> Elegir archivo </label>
                 </div>
-                <div class="kpi-card">
-                    <p class="kpi_titulo">Total Gastos</p>
-                    <p class="kpi_valor">{{ kpis.total_gastos }}</p>
-                </div>
-                <div class="kpi-card">
-                    <p class="kpi_titulo">Balance</p>
-                    <p class="kpi_valor">{{ kpis.balance }}</p>
-                </div>
-                <div class="kpi-card">
-                    <p class="kpi_titulo">Operaciones Ingresos</p>
-                    <p class="kpi_valor">{{ kpis.operaciones_ingresos }}</p>
-                </div>
-                <div class="kpi-card">
-                    <p class="kpi_titulo">Operaciones Gastos</p>
-                    <p class="kpi_valor">{{ kpis.operaciones_gastos }}</p>
-                </div>
-                <div class="kpi-card">
-                    <p class="kpi_titulo">Operaciones Totales</p>
-                    <p class="kpi_valor">{{ kpis.operaciones_totales }}</p>
+                <button class="submit-button" type="submit" id="button">Analizar archivo</button>
+            </form>
+            <div class="loading-overlay hidden" id="loading">
+                <div class="loading-box">
+                    <div class="spinner"></div>
+                    <p id="loading-text">Analizando archivo...</p>
                 </div>
             </div>
-        </div>
-        <h2 class="titulo_grafico">Graficación</h2>
-        <div class="grafico_grid">
-            <div class="chart_container">
-                <p class="grafico_pie">Ingresos, gastos y balance</p>
-                <canvas id="financeChart"></canvas>
+            {% if kpis %}
+            <div class="kpis">
+                <h2 class="kpis-title">Análisis del archivo</h2>
+                <div class="kpis-grid">
+                    <div class="kpi-card">
+                        <p class="kpi_titulo">Total Ingresos</p>
+                        <p class="kpi_valor">{{ kpis.total_ingresos }}</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="kpi_titulo">Total Gastos</p>
+                        <p class="kpi_valor">{{ kpis.total_gastos }}</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="kpi_titulo">Balance</p>
+                        <p class="kpi_valor">{{ kpis.balance }}</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="kpi_titulo">Operaciones Ingresos</p>
+                        <p class="kpi_valor">{{ kpis.operaciones_ingresos }}</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="kpi_titulo">Operaciones Gastos</p>
+                        <p class="kpi_valor">{{ kpis.operaciones_gastos }}</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="kpi_titulo">Operaciones Totales</p>
+                        <p class="kpi_valor">{{ kpis.operaciones_totales }}</p>
+                    </div>
+                </div>
             </div>
-            <div class="chart_container">
-                <p class="grafico_pie">Porcentaje de ingresos x categorias</p>
-                <canvas id="financeChartCategory"></canvas>
+            <h2 class="insights-title">Insigths</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <p class="insight_titulo">🏆 Máximo ingreso</p>
+                    <p class="insight_valor">{{ max_ingreso }}</p>
+                </div>
+                <div class="insight-card">
+                    <p class="insight_titulo">💸 Máximo gasto</p>
+                    <p class="insight_valor">{{ max_gasto }}</p>
+                </div>
+                <div class="insight-card">
+                    <p class="insight_titulo">⚠️ Estado financiero</p>
+                    {% if porcentaje <= 50 %}
+                    <p class="insight_valor">✅ Excelente control de gastos, Tus gastos reprecentan el {{ porcentaje }}% de tus ingresos.</p>
+                    {% elif porcentaje <= 80 %}
+                    <p class="insight_valor">⚠️ Tus gastos reprecentan el {{ porcentaje }}% de tus ingresos.</p>
+                    {% elif porcentaje > 80 and porcentaje <= 100 %}
+                    <p class="insight_valor">🚨 Atención: Tus gastos reprecentan el {{ porcentaje }}% de tus ingresos.</p>
+                    {% elif porcentaje > 100 %}
+                    <p class="insight_valor">🚨 Gastaste más de lo que ingresaste, Tus gastos reprecentan el {{ porcentaje }}% de tus ingresos.</p>
+                    {% endif %}
+                </div>
+                <div class="insight-card">
+                    <p class="insight_titulo">⚖️ Balance promedio mensual</p>
+                    <p class="insight_valor">${{ balance_mensual }}</p>
+                </div>
             </div>
-            <div class="chart_container grafico_bar">
-                <p class="grafico_pie">Gastos por categoría</p>
-                <canvas id="barChartGastos"></canvas>
+            <h2 class="titulo_grafico">Graficación</h2>
+            <div class="grafico_grid">
+                <div class="chart_container">
+                    <p class="grafico_pie">Ingresos, gastos y balance</p>
+                    <canvas id="financeChart"></canvas>
+                </div>
+                <div class="chart_container">
+                    <p class="grafico_pie">Porcentaje de ingresos x categorias</p>
+                    <canvas id="financeChartCategory"></canvas>
+                </div>
+                <div class="chart_container grafico_bar">
+                    <p class="grafico_pie">Gastos por categoría</p>
+                    <canvas id="barChartGastos"></canvas>
+                </div>
+                <div class="chart_container grafico_bar">
+                    <p class="grafico_pie">Ingresos por categoría</p>
+                    <canvas id="barChartIngresos"></canvas>
+                </div>
+                <div class="chart_container grafico_bar">
+                    <p class="grafico_pie">Movimientos por mes</p>
+                    <canvas id="lineChartMovimientos"></canvas>
+                </div>
             </div>
-            <div class="chart_container grafico_bar">
-                <p class="grafico_pie">Ingresos por categoría</p>
-                <canvas id="barChartIngresos"></canvas>
-            </div>
-            <div class="chart_container grafico_bar">
-                <p class="grafico_pie">Movimientos por mes</p>
-                <canvas id="lineChartMovimientos"></canvas>
-            </div>
-        </div>
-        <h2 class="data-table-title">Visualización de los datos</h2>
-        <div class="data-table">
-            {{ df_visual|safe }}
-        </div>
-        {% endif %}
-    </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.js"></script>
-    <script>
-        // grafico de tortas de ingresos, gastos y balance
-        let ingresos_raw = {{ kpis.total_ingresos_raw if kpis else 0 }};
-        let gastos_raw = {{ kpis.total_gastos_raw if kpis else 0 }};
-        let balance_raw = {{ kpis.balance_raw if kpis else 0 }};
+            <h2 class="data-table-title">Visualización de los datos</h2>
+            <div class="data-table">{{ df_visual|safe }}</div>
+            {% endif %}
+        </main>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.js"></script>
+        <script>
+            // grafico de tortas de ingresos, gastos y balance
+            let ingresos_raw = {{ kpis.total_ingresos_raw if kpis else 0 }};
+            let gastos_raw = {{ kpis.total_gastos_raw if kpis else 0 }};
+            let balance_raw = {{ kpis.balance_raw if kpis else 0 }};
 
-        // grafico de gastos por categoria
-        let gasto_x_categoria = {{ (gastos_x_categoria if kpis else { }) | tojson}};
-        let ingreso_x_categoria = {{ (ingresos_x_categoria if kpis else { }) | tojson}};
+            // grafico de gastos por categoria
+            let gasto_x_categoria = {{ (gastos_x_categoria if kpis else { }) | tojson}};
+            let ingreso_x_categoria = {{ (ingresos_x_categoria if kpis else { }) | tojson}};
 
-        // grafico de movimientos por mes
-        let df_fecha_gasto = {{ (df_fecha_gasto if kpis else { }) | tojson}};
-        let df_fecha_ingreso = {{ (df_fecha_ingreso if kpis else { }) | tojson}};
-    </script>
-    <script src="/static/js/main.js"></script>
-
-</body>
-
+            // grafico de movimientos por mes
+            let df_fecha_gasto = {{ (df_fecha_gasto if kpis else { }) | tojson}};
+            let df_fecha_ingreso = {{ (df_fecha_ingreso if kpis else { }) | tojson}};
+        </script>
+        <script src="/static/js/main.js"></script>
+    </body>
 </html>
