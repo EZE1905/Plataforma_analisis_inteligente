@@ -17,12 +17,15 @@ def upload():
     # Obtener el archivo cargado
     archivo = request.files['file']
     
+    # Guardar el archivo en la carpeta de uploads
+    archivo.save('uploads/' + archivo.filename)
+
     try:
         # Leer el archivo
         if archivo.filename.endswith('.csv'):
-            df_crudo = pd.read_csv(archivo)
+            df_crudo = pd.read_csv('uploads/' + archivo.filename)
         elif archivo.filename.endswith('.xlsx') or archivo.filename.endswith('.xlsm') or archivo.filename.endswith('.xls'):
-            df_crudo = pd.read_excel(archivo) 
+            df_crudo = pd.read_excel('uploads/' + archivo.filename) 
         else:
             error = "El archivo debe ser .csv, .xlsx, .xls o .xlsm"
             return render_template('/index.html', error=error)
@@ -32,6 +35,9 @@ def upload():
 
         # Crear df visual para el frontend
         df_visual = crear_visual(df_limpio)
+
+        # Guardar el archivo limpio en la carpeta de uploads
+        df_limpio.to_excel('uploads/limpio.xlsx', index=False)
 
         # Calcular los KPIs
         kpis = analizar_kpis(df_limpio)
@@ -56,6 +62,14 @@ def upload():
     except Exception as e:
         print(f"Error al cargar el archivo: {e}")
         return redirect('/')
+
+@app.route('/exportar', methods=['POST'])
+def exportar():
+    # Lógica para exportar el archivo
+    # Leer archivo de uploads
+    df_limpio = pd.read_excel('uploads/limpio.xlsx')
+    print(df_limpio.head())
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
