@@ -1,5 +1,8 @@
 from flask import Flask, render_template,redirect,request
 import pandas as pd
+import openpyxl
+from datetime import datetime
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
 #importando modulos
 from limpieza.limpiar import limpiar_dataset
@@ -68,7 +71,73 @@ def exportar():
     # Lógica para exportar el archivo
     # Leer archivo de uploads
     df_limpio = pd.read_excel('uploads/limpio.xlsx')
-    print(df_limpio.head())
+    
+    # Calcular los KPIs
+    kpis = analizar_kpis(df_limpio)
+
+    # Crear reporte financiero
+    wb = openpyxl.Workbook()
+
+    # Hoja resumen
+    hoja_resumen = wb.active 
+    # Título
+    hoja_resumen.merge_cells('A1:B1')
+    hoja_resumen['A1'] = "REPORTE FINANCIERO"
+
+    hoja_resumen['A1'].font = Font(size=18, bold=True, color="FFFFFF")
+    hoja_resumen['A1'].fill = PatternFill("solid", fgColor="1F4E78")
+    hoja_resumen['A1'].alignment = Alignment(horizontal="center")
+
+    # Fecha y subtítulos
+    hoja_resumen['A4'] = f"Fecha de creación: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    hoja_resumen['A4'].font = Font(bold=True)
+    hoja_resumen['A6'].font = Font(size=14, bold=True)
+
+    # Encabezados de tabla
+    hoja_resumen['A8'] = "Métrica"
+    hoja_resumen['B8'] = "Valor"
+
+    encabezado_fill = PatternFill("solid", fgColor="1F4E78")
+    encabezado_font = Font(color="FFFFFF", bold=True)
+
+    for celda in ['A8', 'B8']:
+        hoja_resumen[celda].fill = encabezado_fill
+        hoja_resumen[celda].font = encabezado_font
+        hoja_resumen[celda].alignment = Alignment(horizontal="center")
+
+    fila = 9
+
+    # Datos
+    for key, value in kpis.items():
+        if key.endswith('_raw'):
+            continue
+        hoja_resumen[f"A{fila}"] = key.replace('_', ' ').title()
+        hoja_resumen[f"B{fila}"] = value
+        fila += 1
+
+    # Bordes
+    borde = Border(
+        left=Side(style="thin"),
+        right=Side(style="thin"),
+        top=Side(style="thin"),
+        bottom=Side(style="thin")
+    )
+
+    for row in range(8, fila):
+        for col in ['A', 'B']:
+            hoja_resumen[f"{col}{row}"].border = borde
+
+    # Alineación
+    for row in range(9, fila):
+        hoja_resumen[f"A{row}"].alignment = Alignment(horizontal="left")
+        hoja_resumen[f"B{row}"].alignment = Alignment(horizontal="right")
+
+    # Ancho columnas
+    hoja_resumen.column_dimensions['A'].width = 30
+    hoja_resumen.column_dimensions['B'].width = 20
+
+    wb.save('uploads/reporte_financiero.xlsx')
+
     return redirect('/')
 
 if __name__ == '__main__':
